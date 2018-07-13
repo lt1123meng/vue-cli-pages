@@ -6,10 +6,14 @@ var glob = require('glob')
 var VueLoaderPlugin = require('vue-loader/lib/plugin')
 var globEntryReg = './src/modules/*/index.js'
 var globHtmlPluginsReg = './src/modules/*/index.html'
+var entries = getEntry(globEntryReg)
+var chunks = Object.keys(entries)
+console.log('--------------')
+console.log(chunks)
 module.exports = {
     mode: 'development',
     entry: {
-        ...getEntry(globEntryReg)
+        ...entries,
         // app: path.join(__dirname, 'src', 'index.js')
     },
     output: {
@@ -18,7 +22,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.js'
+            'vue$': 'vue/dist/vue.js',
         }
     },
     plugins: [
@@ -27,20 +31,19 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         historyApiFallback: {
-            rewrites: [
-                {from: /./, to: '/404.html'}
-            ]
+            rewrites: [{
+                from: /./,
+                to: '/404.html'
+            }]
         },
         overlay: true,
-        port: 8999
+        port: 8888
     },
     module: {
-        rules: [
-            {
-                test: /\.vue$/,
-                use: ['vue-loader']
-            }
-        ]
+        rules: [{
+            test: /\.vue$/,
+            use: ['vue-loader']
+        }]
     }
 }
 

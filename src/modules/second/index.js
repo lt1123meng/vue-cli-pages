@@ -1,4 +1,4 @@
-require('./a.js')
 require('./b.js')
-console.log('我是second/index.js')
+require('./a.js')
+alert(1)
 let qq = 1
